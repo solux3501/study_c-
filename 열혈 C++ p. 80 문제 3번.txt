@@ -1,0 +1,59 @@
+p. 80 문제 3번
+
+<답안>
+
+#include <iostream>
+using namespace std;
+
+void SwapPointer(int *(&pref1), int *(&pref2)) {
+	int * ptr = pref1;
+	pref1 = pref2;
+	pref2 = ptr;
+}
+
+int main(void) {
+	int num1 = 5;
+	int* ptr1 = &num1; //ptr1은 num1의 주소값
+	int num2 = 10;
+	int* ptr2 = &num2;
+	SwapPointer(ptr1, ptr2);
+
+	cout << *ptr1 << endl;
+	cout << *ptr2 << endl;
+	return 0;
+}
+
+<내가 쓴 코드>
+#include <iostream>
+using namespace std;
+
+void SwapPointer(int* ptr1, int* ptr2) {
+	int temp = *ptr1;
+	*ptr1 = *ptr2;
+	*ptr2 = temp;
+}
+
+int main(void) {
+	int num1 = 5;
+	int* ptr1 = &num1; //ptr1은 num1의 주소값
+	int num2 = 10;
+	int* ptr2 = &num2;
+	SwapPointer(ptr1, ptr2);
+
+	cout << *ptr1 << endl;
+	cout << *ptr2 << endl;
+	return 0;
+}
+
+- 공통적인 부분부터 보자. main의 ptr들은 num의 주소값을 저장한다
+- 내가 사용한 부분은 포인터가 가르키는 부분의 '값'을 직접 변경하는 것이나,
+  문제가 의도한 부분은 '주소' 자체를 바꾸는 것이다.
+
+void SwapPointer(int pref1, int pref2) {
+	int ptr = pref1;
+	pref1 = pref2;
+	pref2 = ptr;
+}
+
+- 이 경우에는 swappointer이 포인터 형식이 매개 변수인데, 일반 정수형으로 사용되어서 그럼
+- 그래서 int *& = int라 생각했는데, 여기서 &는 참조자의 의미로 쓰였기에 완전 다른 방식
