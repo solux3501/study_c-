@@ -57,3 +57,11 @@ void SwapPointer(int pref1, int pref2) {
 
 - 이 경우에는 swappointer이 포인터 형식이 매개 변수인데, 일반 정수형으로 사용되어서 그럼
 - 그래서 int *& = int라 생각했는데, 여기서 &는 참조자의 의미로 쓰였기에 완전 다른 방식
+
+void SwapPointer(int* (&pref1), int* (&pref2)) {
+	int ptr = pref1;
+	pref1 = pref2;
+	pref2 = ptr;
+}
+그렇다면 정답 부분에서 int* ptr이 아닌 int ptr로 하면 어떻게 될까? 이 경우도 되지 않는다. 엔터티가 다르기 때문. 즉 ptr, pref1, pref2 전부 상태(주소던 포인터 형식이던)를 맞춰야한다.
+* 엔터티 : 클래스, 구조체, 객체 처럼 독립적인 의미를 가진 것
