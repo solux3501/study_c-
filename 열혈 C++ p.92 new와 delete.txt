@@ -1,0 +1,52 @@
+#include <iostream>
+#include <string.h>
+#include <stdlib.h>
+using namespace std;
+
+char* MakeStrAdr(int len)
+{
+	char* str = (char*)malloc(sizeof(char) * len);
+	return str;
+}
+
+int main(void) {
+	char* str = MakeStrAdr(20);
+	strcpy(str, "I am so happy~");
+	cout << str << endl;
+	free(str);
+
+	return 0;
+}
+
+- #include <string.h> : C언어에서 strcpy, strlen 등을 쓰기 위한 헤더
+- #include <stdlib.h> : C언어에서 malloc, free 사용을 위한 헤더
+- char* : 문자열의 첫 주소값을 부르기 위함
+- malloc(sizeof(char) * len) : MakeStrAdr의 매개변수만큼 메모리 할당
+- (char*) : malloc의 반환의 경우 void로 나오기에, str로 형변환
+- return str : 할당된 메모리 주소 반환
+- strcpy(str, ~) : 뒤에 있는 매개 변수를 앞에 복사
+- free(str) : malloc으로 할당한 메모리는 반드시 해제
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+char* MakeStrAdr(int len) {
+	// char * str = (char*)malloc(sizeof(char)*len));
+	char* str = new char[len];
+	return str;
+}
+
+int main(void) {
+	char* str = MakeStrAdr(20);
+	strcpy(str, "I am so happy~");
+	cout << str << endl;
+	// free(str);
+	delete []str;
+	return 0;
+}	
+- C++에서 new, delete 쓰는 방식
+- #define _CRT_SECURE_NO_WARNINGS : strcpy 사용시 보안 취약해서 에러. 보안 무시 코드
+- char* str = new char[len] : new에 할당된 메모리를 str에 넣음
+- delete []str : free 대체
