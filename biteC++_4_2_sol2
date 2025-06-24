@@ -1,0 +1,97 @@
+#include <iostream>
+#include <cmath>
+
+class Point {
+	int x, y;
+
+public :
+	Point(int pos_x, int pos_y)
+	{
+		x = pos_x;
+		y = pos_y;
+	}
+	int GetX() const { return x; }
+	int GetY() const { return y; }
+
+	~Point() {
+
+	}
+};
+
+class Geometry {
+public:
+
+	Geometry() {
+		num_points = 0;
+	}
+
+	void AddPoint(const Point &point) {
+		point_array[num_points++] = new Point(point.GetX(), point.GetY());
+	}
+
+	void PrintDistance()
+	{
+		for (int i=0;i<num_points;i++)
+			for (int j = i; j < num_points; j++)
+			{
+				int dx = point_array[i]->GetX();
+				int dy = point_array[i]->GetY();
+				int dx2 = point_array[j]->GetX();
+				int dy2 = point_array[j]->GetY();
+				int dis = sqrt(pow(dx-dx2, 2) + pow(dy - dy2, 2));
+				std::cout << i << "부터 " << j << "까지의 거리는 " << dis << "입니다." << std::endl;
+			}
+	}
+
+	void PrintNumMeets()
+	{
+		int a, b, c, count;
+
+		for (int i = 0; i < num_points; i++)
+			for (int j = i+1; j < num_points; j++)
+			{
+				count = 0;
+				a = point_array[i]->GetY() - point_array[j]->GetY();
+				b = point_array[j]->GetX() - point_array[i]->GetX();
+				c = -(a * point_array[i]->GetX() + b * point_array[i]->GetY());
+
+				for (int k = 0; k < num_points; k++)
+				{
+					if (k == i || k == j)
+						continue;
+					else
+						if (a * point_array[k]->GetX() + b * point_array[k]->GetY() + c == 0)
+							count += 1;
+				}
+				std::cout << "점 " << i << "과 점 " << j << "을 잇는 직선 위에 있는 다른 점의 개수: " << count << "개" << std::endl;
+			}
+	}
+	~Geometry() {
+		for (int i = 0; i < num_points; i++)
+			delete point_array[i];
+	}
+
+private:
+	Point* point_array[100];
+	int num_points;
+};
+
+int main()
+{
+	Geometry g;
+	Point p = Point(1, 1);
+	Point p2 = Point(2, 2);
+	g.AddPoint(p);
+	g.AddPoint(p2);
+	
+	g.PrintDistance();
+	g.PrintNumMeets();
+
+	return 0;
+}
+
+// 주의해야할 점
+// 1. 생성자, 소멸자에 대한 익숙함 부족. 물론 stl로 쓰는 경우 없지만 개념은 알아야 할 듯 싶음.
+// 2. ax+by+c = 0의 식에 대해 수학적으로 다시 풀 필요 있음.
+// 3. ->에 대한 익숙함 부족. 너무 오래 걸림.
+// 내일 다시 확인해서 개념 잡기
