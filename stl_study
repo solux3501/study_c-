@@ -1,0 +1,6 @@
+1. set형식
+- value만 넣을 수 있는 형태
+- sort란 존재하지 않음. 삽입 시마다 '이진 탐색 트리'로 자동으로 오름차순 정렬
+- 시간복잡도 : Olog(N)
+- 내림차순의 경우 : set<int, greater<int>> 로 정의하여 가능
+- set<int, greater<int>> 란? <functional> 헤더에 정의되어 있는 함수 객체 템플릿. 옵션이라 생각하면 편함(디폴트는 less)
